@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import numpy as np
+import ska_sdp_func.visibility as pfl_vis
 from astropy.coordinates import SkyCoord
 from numpy.typing import NDArray
 
@@ -20,7 +22,17 @@ def rotate_uvw(
 ) -> NDArray:
     """
     """
-    return
+    original_uvw_dims = len(original_uvw.shape)
+    while len(original_uvw.shape) < 3:
+        original_uvw = np.expand_dims(original_uvw, axis=0)
+    new_uvw = np.empty(original_uvw.shape)
+    pfl_vis.phase_rotate_uvw(
+        original_phase_centre, new_phase_centre,
+        original_uvw, new_uvw
+    )
+    while len(new_uvw.shape) > original_uvw_dims:
+        new_uvw = new_uvw[0]
+    return new_uvw
 
 def rotate_visibilities(
         original_phase_centre: SkyCoord, new_phase_centre: SkyCoord,
