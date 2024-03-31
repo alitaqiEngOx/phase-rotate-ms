@@ -15,6 +15,9 @@ def process_data(
     """
     """
     ms_original = ms.read(ms_dir)
+    new_uvw = rotate_uvw(
+        ms_original.phase_centre, new_phase_centre, ms_original.uvw
+    )
 
 def rotate_uvw(
         original_phase_centre: SkyCoord, new_phase_centre: SkyCoord,
