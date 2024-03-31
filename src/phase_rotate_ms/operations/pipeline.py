@@ -15,6 +15,7 @@ def process_data(
     """
     """
     ms_original = ms.read(ms_dir)
+    ini_chan, inc_chan = ms_original.get_channels(ms_dir)
     new_uvw = rotate_uvw(
         ms_original.phase_centre, new_phase_centre, ms_original.uvw
     )
