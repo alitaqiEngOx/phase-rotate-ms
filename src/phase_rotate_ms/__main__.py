@@ -1,3 +1,4 @@
+import argparse
 import logging
 import time
 
@@ -5,6 +6,38 @@ import time
 def main() -> None:
     """
     """
+
+def parse_args() -> argparse.Namespace:
+    """
+    """
+    parser = argparse.ArgumentParser(
+        description="MeasurementSet reader for radio astronomy",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        "ms_dir",
+        type=str,
+        help="input MeasurementSet directory."
+    )
+    parser.add_argument(
+        "new_phase_centre",
+        type=float,
+        nargs=2,
+        help="new phase centre in RA DEC."
+    )
+    parser.add_argument(
+        "--name",
+        type=str,
+        default="output",
+        help="name for output dir (default=output)."
+    )
+    parser.add_argument(
+        "--rm",
+        type=bool,
+        action="store_true",
+        help="overwrite existing file with same name"
+    )
+    return parser.parse_args()
 
 
 if __name__ == "__main__":
