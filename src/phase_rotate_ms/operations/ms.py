@@ -96,8 +96,10 @@ class MS:
         """
         """
         ms = cls(dir)
-
-        return cls(dir, phase_centre, uvw, visibilities)
+        ms.phase_centre = phase_centre
+        ms.uvw = uvw
+        ms.visibilities = visibilities
+        return ms
 
     def get_channels(self, dir: Path) -> Tuple[float, float]:
         """
