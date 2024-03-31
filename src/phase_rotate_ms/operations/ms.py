@@ -38,6 +38,12 @@ class MS:
             phase_centre[0][0][0], phase_centre[0][0][1], unit="rad"
         )
 
+    @phase_centre.setter
+    def phase_centre(self, value: SkyCoord) -> None:
+        """
+        """
+        self.phase_centre = value
+
     @property
     def uvw(self) -> NDArray:
         """
@@ -56,6 +62,12 @@ class MS:
             )
         return np.asarray(uvw)
 
+    @uvw.setter
+    def uvw(self, value: NDArray) -> None:
+        """
+        """
+        self.uvw = value
+
     @property
     def visibilities(self) -> NDArray:
         """
@@ -70,6 +82,12 @@ class MS:
             raise ValueError("unsupported DATA with more than 4 dimensions")
         return np.asarray(visibilities)
 
+    @visibilities.setter
+    def visibilities(self, value: NDArray) -> None:
+        """
+        """
+        self.visibilities = value
+
     @classmethod
     def manual_define(
             cls, dir: Path, phase_centre: SkyCoord, 
@@ -77,6 +95,8 @@ class MS:
     ) -> MS:
         """
         """
+        ms = cls(dir)
+
         return cls(dir, phase_centre, uvw, visibilities)
 
     def get_channels(self, dir: Path) -> Tuple[float, float]:
