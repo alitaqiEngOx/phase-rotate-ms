@@ -55,3 +55,17 @@ class MS:
                 "there must be 3 positional coordinates per observation"
             )
         return np.asarray(uvw)
+
+    @property
+    def visibilities(self) -> NDArray:
+        """
+        MeasurementSet Visiblities.
+        """
+        try:
+            with tools.block_logging():
+                visibilities = table(self.ms_dir).getcol("DATA")
+        except:
+            raise FileNotFoundError("expected a 'DATA' column")
+        if len(np.asarray(visibilities).shape) > 4:
+            raise ValueError("unsupported DATA with more than 4 dimensions")
+        return np.asarray(visibilities)
