@@ -79,7 +79,7 @@ class MS:
         """
         return cls(dir, phase_centre, uvw, visibilities)
 
-    def get_channels(dir: Path) -> Tuple[float, float]:
+    def get_channels(self, dir: Path) -> Tuple[float, float]:
         """
         """
         if not dir.exists():
@@ -96,7 +96,7 @@ class MS:
         chan_freq = chan_freq.flatten()
         return chan_freq[0], chan_freq[1]-chan_freq[0]
 
-    def generate_new() -> None:
+    def generate_new(self) -> None:
         """
         """
 
@@ -113,3 +113,4 @@ def write(
     """
     """
     ms = MS.manual_define(dir, phase_centre, uvw, visibilities)
+    ms.generate_new()
