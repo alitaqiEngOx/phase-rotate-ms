@@ -84,3 +84,10 @@ def read(dir: Path) -> MS:
     """
     """
     return MS(dir)
+
+def write(
+        dir: Path, phase_centre: SkyCoord,
+        uvw: NDArray, visibilities: NDArray
+) -> None:
+    """
+    """
