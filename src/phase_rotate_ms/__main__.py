@@ -1,7 +1,14 @@
 import argparse
 import logging
 import time
+from pathlib import Path
 
+
+def assers_errors(args: argparse.Namespace) -> None:
+    """
+    """
+    if not Path(args.ms_dir).exists():
+        raise FileNotFoundError(f"{args.ms_dir} does not exist.")
 
 def main() -> None:
     """
@@ -11,7 +18,7 @@ def parse_args() -> argparse.Namespace:
     """
     """
     parser = argparse.ArgumentParser(
-        description="MeasurementSet reader for radio astronomy",
+        description="Radio astronomy MeasurementSet phase rotator.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
