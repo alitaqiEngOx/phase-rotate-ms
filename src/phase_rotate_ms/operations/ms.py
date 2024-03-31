@@ -96,6 +96,10 @@ class MS:
         chan_freq = chan_freq.flatten()
         return chan_freq[0], chan_freq[1]-chan_freq[0]
 
+    def to_ms() -> None:
+        """
+        """
+
 
 def read(dir: Path) -> MS:
     """
