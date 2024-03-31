@@ -3,8 +3,12 @@ import logging
 import time
 from pathlib import Path
 
+from astropy.coordinates import SkyCoord
 
-def assers_errors(args: argparse.Namespace) -> None:
+from operations import pipeline
+
+
+def assert_errors(args: argparse.Namespace) -> None:
     """
     """
     if not Path(args.ms_dir).exists():
@@ -13,6 +17,19 @@ def assers_errors(args: argparse.Namespace) -> None:
 def main() -> None:
     """
     """
+    args = parse_args()
+    assert_errors(args)
+    
+    pipeline.process_data(
+        Path(args.ms_dir), 
+        SkyCoord(
+            args.new_phase_centre[0], 
+            args.new_phase_centre[1], 
+            unit="deg"
+        ),
+        name=args.name, 
+        rm=args.rm
+    )
 
 def parse_args() -> argparse.Namespace:
     """

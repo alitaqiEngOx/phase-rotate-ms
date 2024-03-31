@@ -1,9 +1,11 @@
 from pathlib import Path
 
+from astropy.coordinates import SkyCoord
+
 
 def process_data(
-        ms_dir: Path, config_dir: Path, *,
-        name: str="output", rm: bool=False
+        ms_dir: Path, new_phase_centre: SkyCoord,
+        *, name: str="output", rm: bool=False
 ):
     """
     """
