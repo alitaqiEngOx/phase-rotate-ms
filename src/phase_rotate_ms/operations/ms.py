@@ -70,6 +70,15 @@ class MS:
             raise ValueError("unsupported DATA with more than 4 dimensions")
         return np.asarray(visibilities)
 
+    @classmethod
+    def writer(
+            cls, dir: Path, phase_centre: SkyCoord, 
+            uvw: NDArray, visibilities: NDArray
+    ) -> MS:
+        """
+        """
+        return cls(dir, phase_centre, uvw, visibilities)
+
 
 def read(dir: Path) -> MS:
     """
