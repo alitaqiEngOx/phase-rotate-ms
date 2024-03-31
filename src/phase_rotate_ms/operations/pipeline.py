@@ -55,4 +55,11 @@ def rotate_visibilities(
             original_visibilities, axis=0
         )
     new_visibilities = np.empty(original_visibilities.shape)
-    return
+    pfl_vis.phase_rotate_vis(
+        original_phase_centre, new_phase_centre,
+        initial_channel, channel_step, original_uvw,
+        original_visibilities, new_visibilities
+    )
+    while len(new_visibilities.shape) > original_vis_dims:
+        new_visibilities = new_visibilities[0]
+    return new_visibilities
