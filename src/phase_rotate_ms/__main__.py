@@ -47,7 +47,7 @@ def parse_args() -> argparse.Namespace:
         "new_phase_centre",
         type=float,
         nargs=2,
-        help="new phase centre in RA DEC."
+        help="new phase centre in RA DEC (deg)."
     )
     parser.add_argument(
         "--name",
