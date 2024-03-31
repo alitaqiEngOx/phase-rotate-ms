@@ -8,8 +8,8 @@ from operations import ms
 def process_data(
         ms_dir: Path, new_phase_centre: SkyCoord,
         *, name: str="output", rm: bool=False
-):
+) -> None:
     """
     """
     ms_original = ms.read(ms_dir)
-    return
+    
