@@ -23,6 +23,10 @@ def process_data(
         ms_original.phase_centre, new_phase_centre,
         ini_chan, inc_chan, ms_original.uvw, ms_original.visibilities
     )
+    ms.write(
+        ms_dir.joinpath(name), new_phase_centre, 
+        new_uvw, new_visibilities
+    )
 
 def rotate_uvw(
         original_phase_centre: SkyCoord, new_phase_centre: SkyCoord,
