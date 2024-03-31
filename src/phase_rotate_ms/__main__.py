@@ -8,6 +8,8 @@ from astropy.coordinates import SkyCoord
 from operations import pipeline
 
 
+logging.getLogger().setLevel(logging.INFO)
+
 def assert_errors(args: argparse.Namespace) -> None:
     """
     """
