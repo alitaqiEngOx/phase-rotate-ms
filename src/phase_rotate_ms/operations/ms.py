@@ -1,6 +1,6 @@
-import os
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Optional, Tuple
 
 import numpy as np
 from astropy.coordinates import SkyCoord
@@ -78,6 +78,23 @@ class MS:
         """
         """
         return cls(dir, phase_centre, uvw, visibilities)
+
+    def get_channels(dir: Path) -> Optional[Tuple[float, float]]:
+        """
+        """
+        if not dir.exists():
+            return None
+        with tools.block_logging():
+            try:
+                chan_freq = table(
+                    str(dir.joinpath("SPECTRAL_WINDOW"))
+                ).getcol("CHAN_FREQ")
+            except:
+                raise FileNotFoundError(
+                    "expected a 'SPECTRAL_WINDOW' table with a 'CHAN_FREQ' column"
+                )
+        chan_freq = chan_freq.flatten()
+        return chan_freq[0], chan_freq[1]-chan_freq[0]
 
 
 def read(dir: Path) -> MS:
