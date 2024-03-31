@@ -49,4 +49,10 @@ def rotate_visibilities(
 ) -> NDArray:
     """
     """
+    original_vis_dims = len(original_visibilities.shape)
+    while len(original_visibilities.shape) < 4:
+        original_visibilities = np.expand_dims(
+            original_visibilities, axis=0
+        )
+    new_visibilities = np.empty(original_visibilities.shape)
     return
