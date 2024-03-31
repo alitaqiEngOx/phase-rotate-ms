@@ -79,11 +79,11 @@ class MS:
         """
         return cls(dir, phase_centre, uvw, visibilities)
 
-    def get_channels(dir: Path) -> Optional[Tuple[float, float]]:
+    def get_channels(dir: Path) -> Tuple[float, float]:
         """
         """
         if not dir.exists():
-            return None
+            raise FileNotFoundError(f"{str(dir)} does not exist.")
         with tools.block_logging():
             try:
                 chan_freq = table(
