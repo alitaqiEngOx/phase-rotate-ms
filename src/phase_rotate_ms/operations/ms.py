@@ -71,7 +71,7 @@ class MS:
         return np.asarray(visibilities)
 
     @classmethod
-    def writer(
+    def manual_define(
             cls, dir: Path, phase_centre: SkyCoord, 
             uvw: NDArray, visibilities: NDArray
     ) -> MS:
@@ -96,7 +96,7 @@ class MS:
         chan_freq = chan_freq.flatten()
         return chan_freq[0], chan_freq[1]-chan_freq[0]
 
-    def to_ms() -> None:
+    def write_new() -> None:
         """
         """
 
@@ -112,4 +112,4 @@ def write(
 ) -> None:
     """
     """
-    ms = MS.writer(dir, phase_centre, uvw, visibilities)
+    ms = MS.manual_define(dir, phase_centre, uvw, visibilities)
