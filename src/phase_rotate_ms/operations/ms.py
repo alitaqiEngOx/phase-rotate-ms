@@ -108,3 +108,4 @@ def write(
 ) -> None:
     """
     """
+    ms = MS.writer(dir, phase_centre, uvw, visibilities)
