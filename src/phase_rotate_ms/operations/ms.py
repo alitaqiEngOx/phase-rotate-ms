@@ -96,7 +96,7 @@ class MS:
         chan_freq = chan_freq.flatten()
         return chan_freq[0], chan_freq[1]-chan_freq[0]
 
-    def write_new() -> None:
+    def generate_new() -> None:
         """
         """
 
