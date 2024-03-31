@@ -19,6 +19,10 @@ def process_data(
     new_uvw = rotate_uvw(
         ms_original.phase_centre, new_phase_centre, ms_original.uvw
     )
+    new_visibilities = rotate_visibilities(
+        ms_original.phase_centre, new_phase_centre,
+        ini_chan, inc_chan, ms_original.uvw, ms_original.visibilities
+    )
 
 def rotate_uvw(
         original_phase_centre: SkyCoord, new_phase_centre: SkyCoord,
