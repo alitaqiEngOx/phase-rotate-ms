@@ -11,6 +11,7 @@ from utils import tools
 
 class MS:
     """
+    Class for MeasurementSets
     """
 
     def __init__(
@@ -19,6 +20,16 @@ class MS:
             *, manual_define: bool=False
     ):
         """
+        Initiator function defining the various attributes as None types. Also,
+        "manual_define" is False by default. These parameters are then defined
+        either by:
+        
+        1- directly reading from the MeasurementSet when calling the 
+           class directly (manual_define=False), or
+        2- calling the class through the write_mode() class method, thereby 
+           manually defining the values of the parameters. This means that the
+           class instance is generated without the need to have a corresponding
+           MeasurementSet existing (manual_define=True).
         """
         self.dir = dir
         self._phase_centre = phase_centre
@@ -29,6 +40,7 @@ class MS:
     @property
     def phase_centre(self) -> SkyCoord:
         """
+        Phase centre of the data.
         """
         if self.manual_define:
             return self._phase_centre
@@ -50,6 +62,7 @@ class MS:
     @property
     def uvw(self) -> NDArray:
         """
+        UVW coordinates.
         """
         if self.manual_define:
             return self._uvw
@@ -69,6 +82,7 @@ class MS:
     @property
     def visibilities(self) -> NDArray:
         """
+        Visibilities.
         """
         if self.manual_define:
             return self._visibilities
@@ -87,6 +101,9 @@ class MS:
             uvw: NDArray, visibilities: NDArray
     ):
         """
+        Class method which when used to create a class instance, the various
+        attributes should be defined manually (i.e., the MeasurementSet does
+        not have to exist for a class instance to be generated).
         """
         return cls(
             dir, phase_centre, uvw, visibilities, manual_define=True
@@ -94,6 +111,10 @@ class MS:
 
     def get_channels(self, dir: Path) -> Tuple[float, float]:
         """
+        Returns the initial channel and the step between channels. Raises
+        an error if the class is called on write_mode and the corresponding
+        MeasurementSet does not exist yet. In such case, run self.generate_new()
+        first.
         """
         if not dir.exists():
             raise FileNotFoundError(f"{str(dir)} does not exist.")
@@ -113,6 +134,10 @@ class MS:
 
     def generate_new(self) -> None:
         """
+        Where a class instance exists but not its corresponding MeasurementSet
+        (e.g., when calling MS through the write_mode() class method), this method
+        generates a new MeasurementSet by copying another MeasurementSet at "ms_dir"
+        and writes the class attribues as data into this newly copied directory.
         """
         with tools.block_logging():
             main_table = table(str(self.dir), readonly=False)
@@ -134,6 +159,7 @@ class MS:
 
 def read(dir: Path) -> MS:
     """
+    Generates a normal instance of the MS class.
     """
     return MS(dir)
 
@@ -142,6 +168,8 @@ def write(
         uvw: NDArray, visibilities: NDArray
 ) -> None:
     """
+    Generates a write_mode() instance of the MS class and passes valeues
+    for the different attributes directly.
     """
     ms = MS.write_mode(dir, phase_centre, uvw, visibilities)
     ms.generate_new()
