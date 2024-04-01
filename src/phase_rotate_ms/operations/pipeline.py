@@ -8,6 +8,15 @@ from numpy.typing import NDArray
 from operations import ms
 
 
+def copy_dir(
+        ms_dir_original: Path, *, name: str
+) -> None:
+    """
+    """
+    target_dir = ms_dir_original.parent.joinpath(
+        name, f"phase_rotated_{ms_dir_original.name}"
+    )
+
 def process_data(
         ms_dir: Path, new_phase_centre: SkyCoord,
         *, name: str="output", rm: bool=False
@@ -23,6 +32,7 @@ def process_data(
         ms_original.phase_centre, new_phase_centre,
         ini_chan, inc_chan, ms_original.uvw, ms_original.visibilities
     )
+    copy_dir(ms_dir, name=name)
     ms.write(
         ms_dir.joinpath(name), new_phase_centre, 
         new_uvw, new_visibilities
