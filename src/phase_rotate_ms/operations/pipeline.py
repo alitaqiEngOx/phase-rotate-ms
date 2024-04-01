@@ -1,3 +1,5 @@
+import logging
+import shutil
 from pathlib import Path
 
 import numpy as np
@@ -9,17 +11,30 @@ from operations import ms
 
 
 def copy_dir(
-        ms_dir_original: Path, *, name: str
+        original_dir: Path, *, name: str, rm: bool=False
 ) -> None:
     """
     """
-    target_dir = ms_dir_original.parent.joinpath(
-        name, f"phase_rotated_{ms_dir_original.name}"
+    target_dir = original_dir.parent.joinpath(
+        name, f"phase_rotated_{original_dir.name}"
     )
+    try:
+        shutil.copytree(
+            str(original_dir), str(target_dir)
+        )
+    except FileExistsError:
+        if rm:
+            logging.info(f"\nOverwriting {str(target_dir.name)}.\n")
+            shutil.rmtree(target_dir)
+            shutil.copytree(
+                str(original_dir), str(target_dir)
+            )
+        else:
+            raise FileExistsError(f"Overwriting {str(target_dir.name)} blocked.")
 
 def process_data(
         ms_dir: Path, new_phase_centre: SkyCoord,
-        *, name: str="output"
+        *, name: str="output", rm: bool=False
 ) -> None:
     """
     """
@@ -32,7 +47,7 @@ def process_data(
         ms_original.phase_centre, new_phase_centre,
         ini_chan, inc_chan, ms_original.uvw, ms_original.visibilities
     )
-    copy_dir(ms_dir, name=name)
+    copy_dir(ms_dir, name=name, rm=rm)
     ms.write(
         ms_dir.joinpath(name), new_phase_centre, 
         new_uvw, new_visibilities
