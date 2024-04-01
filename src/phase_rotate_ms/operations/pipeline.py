@@ -6,7 +6,6 @@ from astropy.coordinates import SkyCoord
 from numpy.typing import NDArray
 
 from operations import ms
-from utils import tools
 
 
 def process_data(
