@@ -14,8 +14,8 @@ class MS:
     """
 
     def __init__(
-            self, dir: Path, phase_centre: Optional[SkyCoord], 
-            uvw: Optional[NDArray], visibilities: Optional[NDArray],
+            self, dir: Path, phase_centre: Optional[SkyCoord]=None, 
+            uvw: Optional[NDArray]=None, visibilities: Optional[NDArray]=None,
             *, manual_define: bool=False
     ):
         """
