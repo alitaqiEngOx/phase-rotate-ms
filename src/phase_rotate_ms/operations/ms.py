@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional, Tuple
 
@@ -10,19 +9,29 @@ from numpy.typing import NDArray
 from utils import tools
 
 
-@dataclass
 class MS:
     """
     """
 
-    dir: Path
-    """"""
+    def __init__(
+            self, dir: Path, phase_centre: Optional[SkyCoord], 
+            uvw: Optional[NDArray], visibilities: Optional[NDArray],
+            *, manual_define: bool=False
+    ):
+        """
+        """
+        self.dir = dir
+        self._phase_centre = phase_centre
+        self._uvw = uvw
+        self._visibilities = visibilities
+        self.manual_define = manual_define
 
     @property
     def phase_centre(self) -> SkyCoord:
         """
-        MeasurementSet phase centre.
         """
+        if self.manual_define:
+            return self._phase_centre
         try:
             with tools.block_logging():
                 phase_centre = table(
@@ -38,17 +47,12 @@ class MS:
             phase_centre[0][0][0], phase_centre[0][0][1], unit="rad"
         )
 
-    @phase_centre.setter
-    def phase_centre(self, value: SkyCoord) -> None:
-        """
-        """
-        self.phase_centre = value
-
     @property
     def uvw(self) -> NDArray:
         """
-        MeasurementSet UVW coordinates.
         """
+        if self.manual_define:
+            return self._uvw
         try:
             with tools.block_logging():
                 uvw = table(str(self.dir)).getcol("UVW")
@@ -62,17 +66,12 @@ class MS:
             )
         return np.asarray(uvw)
 
-    @uvw.setter
-    def uvw(self, value: NDArray) -> None:
-        """
-        """
-        self.uvw = value
-
     @property
     def visibilities(self) -> NDArray:
         """
-        MeasurementSet Visiblities.
         """
+        if self.manual_define:
+            return self._visibilities
         try:
             with tools.block_logging():
                 visibilities = table(str(self.dir)).getcol("DATA")
@@ -82,24 +81,16 @@ class MS:
             raise ValueError("unsupported DATA with more than 4 dimensions")
         return np.asarray(visibilities, dtype=np.complex128)
 
-    @visibilities.setter
-    def visibilities(self, value: NDArray) -> None:
-        """
-        """
-        self.visibilities = np.asarray(value, dtype=np.complex128)
-
     @classmethod
-    def manual_define(
+    def write_mode(
             cls, dir: Path, phase_centre: SkyCoord, 
             uvw: NDArray, visibilities: NDArray
     ):
         """
         """
-        ms = cls(dir)
-        ms.phase_centre = phase_centre
-        ms.uvw = uvw
-        ms.visibilities = visibilities
-        return ms
+        return cls(
+            dir, phase_centre, uvw, visibilities, manual_define=True
+        )
 
     def get_channels(self, dir: Path) -> Tuple[float, float]:
         """
