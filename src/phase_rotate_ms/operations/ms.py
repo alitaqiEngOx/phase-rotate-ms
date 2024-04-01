@@ -127,5 +127,5 @@ def write(
 ) -> None:
     """
     """
-    ms = MS.manual_define(dir, phase_centre, uvw, visibilities)
+    ms = MS.write_mode(dir, phase_centre, uvw, visibilities)
     ms.generate_new()
