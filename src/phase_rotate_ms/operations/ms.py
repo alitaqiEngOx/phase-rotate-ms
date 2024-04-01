@@ -132,13 +132,16 @@ class MS:
             return chan_freq[0], 0.
         return chan_freq[0], chan_freq[1]-chan_freq[0]
 
-    def generate_new(self) -> None:
+    def generate_new(
+            self, ms_dir: Path, *, name: str="output", rm: bool=False
+    ) -> None:
         """
         Where a class instance exists but not its corresponding MeasurementSet
         (e.g., when calling MS through the write_mode() class method), this method
         generates a new MeasurementSet by copying another MeasurementSet at "ms_dir"
         and writes the class attribues as data into this newly copied directory.
         """
+        tools.copy_dir(ms_dir, self.dir, name=name, rm=rm)
         with tools.block_logging():
             main_table = table(str(self.dir), readonly=False)
             main_table.putcol("UVW", self.uvw)
@@ -164,12 +167,13 @@ def read(dir: Path) -> MS:
     return MS(dir)
 
 def write(
-        dir: Path, phase_centre: SkyCoord,
-        uvw: NDArray, visibilities: NDArray
+        dir: Path, ms_dir: Path, phase_centre: SkyCoord,
+        uvw: NDArray, visibilities: NDArray, 
+        *, name: str="output", rm: bool=False
 ) -> None:
     """
     Generates a write_mode() instance of the MS class and passes valeues
     for the different attributes directly.
     """
     ms = MS.write_mode(dir, phase_centre, uvw, visibilities)
-    ms.generate_new()
+    ms.generate_new(ms_dir, name=name, rm=rm)

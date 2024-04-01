@@ -17,8 +17,7 @@ def process_data(
     Entry function. 
     1- Reads input MeasurementSet.
     2- Phase rotates uvw and visibilities.
-    3- Copies MeasurementSet into a target directory.
-    4- Updates uvw and visibilities in the new MeasurementSet.
+    3- Generates a new MeasurementSet with the new data.
     """
     ms_original = ms.read(ms_dir)
     ini_chan, inc_chan = ms_original.get_channels(ms_dir)
@@ -32,7 +31,6 @@ def process_data(
     target_dir = ms_dir.parent.joinpath(
         name, f"phase_rotated_{ms_dir.name}"
     )
-    tools.copy_dir(ms_dir, target_dir, name=name, rm=rm)
     ms.write(
         target_dir, new_phase_centre, new_uvw, new_visibilities
     )
