@@ -20,8 +20,8 @@ def copy_dir(
         *, name: str, rm: bool=False
 ) -> None:
     """
-    Copies a directory "original_dir" into a target path
-    "target_dir". Overwriting is blocked unless --rm is
+    Copies a directory "{original_dir}" into a target path
+    "{name}/{target_dir}". Overwriting is blocked unless --rm is
     flagged in the terminal comand.
     """
     target_dir = original_dir.parent.joinpath(
