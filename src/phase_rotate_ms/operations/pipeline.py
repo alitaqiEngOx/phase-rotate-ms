@@ -8,30 +8,8 @@ from astropy.coordinates import SkyCoord
 from numpy.typing import NDArray
 
 from operations import ms
+from utils import tools
 
-
-def copy_dir(
-        original_dir: Path, target_dir: Path,
-        *, name: str, rm: bool=False
-) -> None:
-    """
-    """
-    target_dir = original_dir.parent.joinpath(
-        name, f"phase_rotated_{original_dir.name}"
-    )
-    try:
-        shutil.copytree(
-            str(original_dir), str(target_dir)
-        )
-    except FileExistsError:
-        if rm:
-            logging.info(f"\nOverwriting {str(target_dir.name)}.\n")
-            shutil.rmtree(target_dir)
-            shutil.copytree(
-                str(original_dir), str(target_dir)
-            )
-        else:
-            raise FileExistsError(f"Overwriting {str(target_dir.name)} blocked.")
 
 def process_data(
         ms_dir: Path, new_phase_centre: SkyCoord,
@@ -51,7 +29,7 @@ def process_data(
     target_dir = ms_dir.parent.joinpath(
         name, f"phase_rotated_{ms_dir.name}"
     )
-    copy_dir(ms_dir, target_dir, name=name, rm=rm)
+    tools.copy_dir(ms_dir, target_dir, name=name, rm=rm)
     ms.write(
         target_dir, new_phase_centre, new_uvw, new_visibilities
     )
