@@ -80,13 +80,13 @@ class MS:
             raise FileNotFoundError("expected a 'DATA' column")
         if len(np.asarray(visibilities).shape) > 4:
             raise ValueError("unsupported DATA with more than 4 dimensions")
-        return np.asarray(visibilities)
+        return np.asarray(visibilities, dtype=np.complex128)
 
     @visibilities.setter
     def visibilities(self, value: NDArray) -> None:
         """
         """
-        self.visibilities = value
+        self.visibilities = np.asarray(value, dtype=np.complex128)
 
     @classmethod
     def manual_define(

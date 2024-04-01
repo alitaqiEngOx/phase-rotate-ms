@@ -58,7 +58,9 @@ def rotate_visibilities(
         original_visibilities = np.expand_dims(
             original_visibilities, axis=0
         )
-    new_visibilities = np.empty(original_visibilities.shape)
+    new_visibilities = np.empty(
+        original_visibilities.shape, dtype=np.complex128
+    )
     pfl_vis.phase_rotate_vis(
         original_phase_centre, new_phase_centre,
         initial_channel, channel_step, original_uvw,
