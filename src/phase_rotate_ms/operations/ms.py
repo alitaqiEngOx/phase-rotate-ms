@@ -11,7 +11,7 @@ from utils import tools
 
 class MS:
     """
-    Class for MeasurementSets
+    Class for MeasurementSets.
     """
 
     def __init__(
