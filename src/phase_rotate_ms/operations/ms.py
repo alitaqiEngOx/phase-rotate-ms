@@ -114,6 +114,22 @@ class MS:
     def generate_new(self) -> None:
         """
         """
+        with tools.block_logging():
+            main_table = table(str(self.dir), readonly=False)
+            main_table.putcol("UVW", self.uvw)
+            main_table.putcol("DATA", self.visibilities)
+            main_table.close()
+            field_table = table(str(self.dir.joinpath("FIELD")), readonly=False)
+            existing_phase_centre_dims = len(
+                np.asarray(field_table.getcol("PHASE_DIR")).shape
+            )
+            new_phase_centre = np.asarray([
+                self.phase_centre.ra.rad, self.phase_centre.dec.rad
+            ])
+            while len(new_phase_centre.shape) < existing_phase_centre_dims:
+                new_phase_centre = np.expand_dims(new_phase_centre, axis=0)
+            field_table.putcol("PHASE_DIR", new_phase_centre)
+            field_table.close()
 
 
 def read(dir: Path) -> MS:
