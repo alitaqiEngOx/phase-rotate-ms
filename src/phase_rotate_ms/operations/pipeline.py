@@ -32,7 +32,8 @@ def process_data(
         name, f"phase_rotated_{ms_dir.name}"
     )
     ms.write(
-        target_dir, new_phase_centre, new_uvw, new_visibilities
+        target_dir, ms_dir, new_phase_centre, new_uvw, 
+        new_visibilities, name=name, rm=rm
     )
 
 def rotate_uvw(
