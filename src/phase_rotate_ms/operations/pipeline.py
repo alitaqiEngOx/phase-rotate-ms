@@ -11,7 +11,8 @@ from operations import ms
 
 
 def copy_dir(
-        original_dir: Path, *, name: str, rm: bool=False
+        original_dir: Path, target_dir: Path,
+        *, name: str, rm: bool=False
 ) -> None:
     """
     """
@@ -47,10 +48,12 @@ def process_data(
         ms_original.phase_centre, new_phase_centre,
         ini_chan, inc_chan, ms_original.uvw, ms_original.visibilities
     )
-    copy_dir(ms_dir, name=name, rm=rm)
+    target_dir = ms_dir.parent.joinpath(
+        name, f"phase_rotated_{ms_dir.name}"
+    )
+    copy_dir(ms_dir, target_dir, name=name, rm=rm)
     ms.write(
-        ms_dir.joinpath(name), new_phase_centre, 
-        new_uvw, new_visibilities
+        target_dir, new_phase_centre, new_uvw, new_visibilities
     )
 
 def rotate_uvw(
