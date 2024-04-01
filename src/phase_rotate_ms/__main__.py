@@ -29,7 +29,8 @@ def main() -> None:
             args.new_phase_centre[1], 
             unit="deg"
         ),
-        name=args.name
+        name=args.name,
+        rm=args.rm
     )
 
 def parse_args() -> argparse.Namespace:
@@ -55,6 +56,12 @@ def parse_args() -> argparse.Namespace:
         type=str,
         default="output",
         help="name for output dir (default=output)."
+    )
+    parser.add_argument(
+        "--rm",
+        type=bool,
+        action="store_true",
+        help="overwrite existing outputs with same name."
     )
     return parser.parse_args()
 
