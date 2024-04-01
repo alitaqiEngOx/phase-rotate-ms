@@ -75,7 +75,7 @@ class MS:
         """
         try:
             with tools.block_logging():
-                visibilities = table((self.dir)).getcol("DATA")
+                visibilities = table(str(self.dir)).getcol("DATA")
         except:
             raise FileNotFoundError("expected a 'DATA' column")
         if len(np.asarray(visibilities).shape) > 4:
