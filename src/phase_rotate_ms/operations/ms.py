@@ -51,7 +51,7 @@ class MS:
         """
         try:
             with tools.block_logging():
-                uvw = table(self.ms_dir).getcol("UVW")
+                uvw = table(str(self.dir)).getcol("UVW")
         except:
             raise FileNotFoundError("expected a 'UVW' column")
         if len(np.asarray(uvw).shape) > 3:
@@ -75,7 +75,7 @@ class MS:
         """
         try:
             with tools.block_logging():
-                visibilities = table(self.ms_dir).getcol("DATA")
+                visibilities = table((self.dir)).getcol("DATA")
         except:
             raise FileNotFoundError("expected a 'DATA' column")
         if len(np.asarray(visibilities).shape) > 4:
@@ -92,7 +92,7 @@ class MS:
     def manual_define(
             cls, dir: Path, phase_centre: SkyCoord, 
             uvw: NDArray, visibilities: NDArray
-    ) -> MS:
+    ):
         """
         """
         ms = cls(dir)
@@ -116,6 +116,8 @@ class MS:
                     "expected a 'SPECTRAL_WINDOW' table with a 'CHAN_FREQ' column"
                 )
         chan_freq = chan_freq.flatten()
+        if len(chan_freq) == 1:
+            return chan_freq[0], 0.
         return chan_freq[0], chan_freq[1]-chan_freq[0]
 
     def generate_new(self) -> None:
