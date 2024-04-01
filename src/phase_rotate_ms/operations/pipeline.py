@@ -14,6 +14,11 @@ def process_data(
         *, name: str="output", rm: bool=False
 ) -> None:
     """
+    Entry function. 
+    1- Reads input MeasurementSet.
+    2- Phase rotates uvw and visibilities.
+    3- Copies MeasurementSet into a target directory.
+    4- Updates uvw and visibilities in the new MeasurementSet.
     """
     ms_original = ms.read(ms_dir)
     ini_chan, inc_chan = ms_original.get_channels(ms_dir)
@@ -37,6 +42,7 @@ def rotate_uvw(
         original_uvw: NDArray
 ) -> NDArray:
     """
+    Phase rotates uvw data.
     """
     original_uvw_dims = len(original_uvw.shape)
     while len(original_uvw.shape) < 3:
@@ -56,6 +62,7 @@ def rotate_visibilities(
         original_uvw: NDArray, original_visibilities: NDArray
 ) -> NDArray:
     """
+    phase rotates visibilities.
     """
     original_vis_dims = len(original_visibilities.shape)
     while len(original_visibilities.shape) < 4:
