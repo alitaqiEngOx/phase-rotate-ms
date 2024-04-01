@@ -12,12 +12,14 @@ logging.getLogger().setLevel(logging.INFO)
 
 def assert_errors(args: argparse.Namespace) -> None:
     """
+    Raises errors for inputs as necessary.
     """
     if not Path(args.ms_dir).exists():
         raise FileNotFoundError(f"{args.ms_dir} does not exist.")
 
 def main() -> None:
     """
+    Entry function.
     """
     args = parse_args()
     assert_errors(args)
@@ -35,6 +37,7 @@ def main() -> None:
 
 def parse_args() -> argparse.Namespace:
     """
+    Parses terminal commands.
     """
     parser = argparse.ArgumentParser(
         description="Radio astronomy MeasurementSet phase rotator.",
