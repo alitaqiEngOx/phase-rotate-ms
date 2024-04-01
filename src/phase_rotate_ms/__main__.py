@@ -59,7 +59,6 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--rm",
-        type=bool,
         action="store_true",
         help="overwrite existing file with same name"
     )
