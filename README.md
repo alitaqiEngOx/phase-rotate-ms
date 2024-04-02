@@ -4,7 +4,7 @@
 
 
 
-This software phase rotates UVW and visibility data in radio astronomy MeasurementSets. It geerates a copy of your input MeasurementSet with the newly phase rotated data along with the updated phase tracking centre.
+This software phase rotates UVW and visibility data in radio astronomy MeasurementSets. It generates a copy of your input MeasurementSet with the newly phase rotated data along with the updated phase tracking centre.
 
 Libraries required:
 
