@@ -22,7 +22,7 @@ def copy_dir(
     """
     Copies a directory "{original_dir}" into a target path
     "{name}/{target_dir}". Overwriting is blocked unless --rm is
-    flagged in the terminal comand.
+    flagged in the terminal command.
     """
     target_dir = original_dir.parent.joinpath(
         name, f"phase_rotated_{original_dir.name}"
