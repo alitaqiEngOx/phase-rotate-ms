@@ -25,7 +25,7 @@ class MS:
         either by:
         
         1- directly reading from the MeasurementSet when calling the 
-           class directly (manual_define=False), or
+           class (manual_define=False), or
         2- calling the class through the write_mode() class method, thereby 
            manually defining the values of the parameters. This means that the
            class instance is generated without the need to have a corresponding
@@ -172,7 +172,7 @@ def write(
         *, name: str="output", rm: bool=False
 ) -> None:
     """
-    Generates a write_mode() instance of the MS class and passes valeues
+    Generates a write_mode() instance of the MS class and passes values
     for the different attributes directly.
     """
     ms = MS.write_mode(dir, phase_centre, uvw, visibilities)
